@@ -1,41 +1,69 @@
 <?php
-session_start();
+require "classes/utilisateur.class.php";
 
-require "classes/utilisateur.class.php"; 
+session_start();
+LogoutUser();
+ValidateUser();
 
 function ValidateUser()
 {
-    if(isset($_POST["username"])){
-        $name =trim($_POST["name"]);
+    $isValidated = true;
+    if (isset($_POST["username"])) {
+        $name = trim($_POST["username"]);
     }
 
-    if(isset($_POST["password"])){
-        $password =trim($_POST["password"]);
+    if (isset($_POST["password"])) {
+        $password = trim($_POST["password"]);
+
+        if (!preg_match("/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$/", $password)) {
+            echo "Your password must have an Uppercase letter, a number and at least 8 characters.";
+            $isValidated = false;
+        }
     }
 
-    if(empty($name)){
+    if (isset($_POST["email"])) {
+        $email = trim($_POST["email"]);
+    }
+
+    if (isset($_POST["role"])) {
+        $role = trim($_POST["role"]);
+    }
+
+    if (empty($name)) {
         echo "Name is required";
     }
 
-    if(strlen($name)<3){
+    if (strlen($name) < 3) {
         echo "Name is too short";
     }
 
-    $user = 
+    if ($isValidated) {
+        $user = new User($name, $password, $email, $role);
 
-    $_SESSION[username] = $name;
+        $_SESSION["user"] = $user;
+
+        header("Location: pageAcceuil.php");
+        exit();
+
+    }else{
+        header("Location: pageConnexion.php");
+        exit();
+    }
 
 
 }
 
 function LogoutUser()
 {
-    session_destroy();
-    session_unset();
+    if (isset($_POST["logout"])) {
+        unset($_SESSION["user"]);
+        session_destroy();
 
+        header("Location: pageAcceuil.php");
+        exit();
+    }
 }
 
 
 
 ?>
-

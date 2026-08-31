@@ -20,4 +20,5 @@
 
 
 </body>
+<?php require "Require/ex.pied.php"; ?>
 </html>
