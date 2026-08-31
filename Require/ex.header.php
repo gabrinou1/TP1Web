@@ -5,8 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" >
-    <lnik rel="icon" type="
-    <title>Exercices php</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <title>Librairie Magasin</title>
 
     <style>
       body { background-color: #6d6b7e;  }
@@ -18,8 +18,7 @@
 
 <div class="container" id="detail">
   <div class="text-white d-flex"> 
-      <h1>MML </h1>
-      
+      <h1>MML</h1>
   </div><hr/>
 
   
