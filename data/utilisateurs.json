@@ -1,0 +1,21 @@
+{"utilisateur": [
+    {
+        "name": "Gabriel",
+        "password": "123456!M",
+        "email": "gabvallieres22@hotmail.com",
+        "role": "Gerant"
+    },
+    {
+        "name": "Brad",
+        "password": "123456!M",
+        "email": "Brad@gmail.com",
+        "role": "Esclave"
+    },
+    {
+        "name": "Aimeric",
+        "password": "123456!M",
+        "email": "Aimeric@gmail.com",
+        "role": "Visiteur"
+    }
+]
+}

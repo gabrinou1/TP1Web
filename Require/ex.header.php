@@ -31,20 +31,20 @@ if (isset($_SESSION["user"])) {
 
 
   <div class="container" id="detail">
-    <div class="text-white d-flex">
-      <h1>MML</h1>
+    <div class="text-white d-flex align-items-center">
+      <img src="images\LLM_Logo.png" alt="LLM-Logo" width="75px" height="75px">
     </div>
     <hr />
 
 
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-      <a class="navbar-brand" href="#">Menu</a>
+      <a class="navbar-brand" href="#">Mediateque Musical en Ligne</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse d-flex justify-content-evenly" id="navbarNavAltMarkup">
+      <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <a class="nav-item nav-link active px-10" href="pageAcceuil.php">Accueil <span
               class="sr-only">(current)</span></a>
