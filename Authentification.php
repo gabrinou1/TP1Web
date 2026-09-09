@@ -5,11 +5,20 @@ session_start();
 LogoutUser();
 ValidateUser();
 
+$jsonFile = '/data/utilisateurs.json';
+
+$userData = [];
+
+if (file_exists($jsonFile)) {
+    $jsonString = file_get_contents($jsonFile);
+    $userData = json_decode($jsonString, true); 
+}
+
 function ValidateUser()
 {
     $isValidated = true;
-    if (isset($_POST["username"])) {
-        $name = trim($_POST["username"]);
+    if (isset($_POST["userName"])) {
+        $name = trim($_POST["userName"]);
     }
 
     if (isset($_POST["password"])) {
