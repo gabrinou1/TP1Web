@@ -1,0 +1,5 @@
+{
+    "php.codeActions.enabled": false,
+    "php.completion.autoimport": "none",
+    "php.completion.autoimport-docblock": "none"
+}
