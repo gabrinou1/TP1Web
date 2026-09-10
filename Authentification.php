@@ -7,12 +7,16 @@ ValidateUser();
 
 $jsonFile = '/data/utilisateurs.json';
 
-$userData = [];
-
-if (file_exists($jsonFile)) {
-    $jsonString = file_get_contents($jsonFile);
-    $userData = json_decode($jsonString, true); 
+if (file_exists($filename)) {
+    $currentData = file_get_contents($filename);
+    $arrayData = json_decode($currentData, true); 
+} else {
+    $arrayData = [];
 }
+
+
+
+
 
 function ValidateUser()
 {
@@ -25,7 +29,7 @@ function ValidateUser()
         $password = trim($_POST["password"]);
 
         if (!preg_match("/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$/", $password)) {
-            echo "Your password must have an Uppercase letter, a number and at least 8 characters.";
+            echo "Ton mot de passe est pas goood";
             $isValidated = false;
         }
     }
@@ -73,6 +77,19 @@ function LogoutUser()
     }
 }
 
+$newData = [
+    "name" => $name,
+    "password" => $password,
+    "email" => $email,
+    "role"=> $role,
+];
 
+$arrayData[] = $newData;
+$jsonString = json_encode($arrayData, JSON_PRETTY_PRINT);
+
+
+if (file_put_contents($filename, $jsonString, LOCK_EX)) {
+    echo "New record successfully appended!";
+}
 
 ?>

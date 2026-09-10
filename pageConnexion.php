@@ -20,8 +20,7 @@
             <option selected> Visiteur </option>
             <option> Gérant </option>
         </select>
-        <input type="submit" value="connexion" class="btn btn-primary">
-
+        <input type="submit" value="s'inscrire" class="btn btn-primary">
         </form>
 </body>
 <?php require "Require/ex.pied.php"; ?>

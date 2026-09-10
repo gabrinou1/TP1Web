@@ -24,6 +24,7 @@ $isConnected = false;
 session_start();
 if (isset($_SESSION["user"])) {
   $isConnected = true;
+  $user = $_SESSION["user"];
 }
 ?>
 
@@ -49,7 +50,13 @@ if (isset($_SESSION["user"])) {
           <a class="nav-item nav-link active px-10" href="pageAcceuil.php">Accueil <span
               class="sr-only">(current)</span></a>
           <a class="nav-item nav-link px-10" href="pageAlbums.php">Albums</a>
-          <a class="nav-item nav-link px-10" href="pageArtiste.php">Artiste</a>
+          <?php if ($isConnected) {
+            if ($user->getRole() == "Gérant") {
+              echo '<a class="nav-item nav-link px-10" href="pageArtiste.php">Artiste</a>';
+            }
+          }
+          ?>
+
           <a class="nav-item nav-link px-10" href="pageOeuvre.php">Oeuvres</a>
           <?php
           if ($isConnected) {
