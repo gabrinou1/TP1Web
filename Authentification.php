@@ -5,14 +5,7 @@ session_start();
 LogoutUser();
 ValidateUser();
 
-$jsonFile = '/data/utilisateurs.json';
 
-if (file_exists($filename)) {
-    $currentData = file_get_contents($filename);
-    $arrayData = json_decode($currentData, true); 
-} else {
-    $arrayData = [];
-}
 
 
 
@@ -55,10 +48,34 @@ function ValidateUser()
 
         $_SESSION["user"] = $user;
 
-        header("Location: pageAcceuil.php");
+        $jsonFile = '/data/utilisateurs.json';
+
+        if (file_exists($jsonFile)) {
+            $currentData = file_get_contents($jsonFile);
+            $arrayData = json_decode($currentData, true);
+        } else {
+            $arrayData = [];
+        }
+
+        
+        $newData = [
+            "name" => $name,
+            "password" => $password,
+            "email" => $email,
+            "role" => $role,
+        ];
+
+        $arrayData[] = $newData;
+        $jsonString = json_encode($arrayData, JSON_PRETTY_PRINT);
+
+
+        if (file_put_contents($jsonFile, $jsonString, LOCK_EX)) {
+            echo "New record successfully appended!";
+        }
+        header("Location: pageProfil.php");
         exit();
 
-    }else{
+    } else {
         header("Location: pageConnexion.php");
         exit();
     }
@@ -77,19 +94,6 @@ function LogoutUser()
     }
 }
 
-$newData = [
-    "name" => $name,
-    "password" => $password,
-    "email" => $email,
-    "role"=> $role,
-];
 
-$arrayData[] = $newData;
-$jsonString = json_encode($arrayData, JSON_PRETTY_PRINT);
-
-
-if (file_put_contents($filename, $jsonString, LOCK_EX)) {
-    echo "New record successfully appended!";
-}
 
 ?>
