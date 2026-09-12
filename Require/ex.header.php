@@ -22,7 +22,7 @@ $isConnected = false;
 
 
 session_start();
-if (isset($_SESSION["user"])) {
+if (isset($_SESSION["connected"])) {
   $isConnected = true;
   $user = $_SESSION["user"];
 }
@@ -49,24 +49,25 @@ if (isset($_SESSION["user"])) {
               class="sr-only"></span></a>
           <a class="nav-item nav-link px-10" href="pageAlbums.php">Albums</a>
           <?php if ($isConnected) {
-            if ($user->getRole() == "Gérant") {
+            if ($user->getRole() == "gerant") {
               echo '<a class="nav-item nav-link px-10" href="pageArtiste.php">Artiste</a>';
+              echo '<a class="nav-item nav-link px-10" href="pageOeuvre.php">Oeuvres</a>';
             }
           }
           ?>
 
-          <a class="nav-item nav-link px-10" href="pageOeuvre.php">Oeuvres</a>
+          
+
           <?php
+
           if ($isConnected) {
             echo '<a class="nav-item nav-link px-10" href="pageProfil.php">Profil</a>';
             echo '<form method="post" action ="Authentification.php">
             <input type="submit" class="btn btn-danger" name="logout" value="Deconnexion">
           </form>';
           } else {
-            $page = $_SERVER["PHP_SELF"];
-            if (strpos($page, "Connexion") == false) {
-              echo '<a class="nav-item nav-link px-10 bg-success rounded" href="pageConnexion.php">Connection</a>';
-            }
+            echo '<a class="nav-item nav-link px-10" href="pageInscription.php">Inscription</a>';
+            echo '<a class="nav-item nav-link px-10 bg-success rounded" href="pageConnexion.php">Connexion</a>';
           }
           ?>
 

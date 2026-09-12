@@ -1,6 +1,13 @@
 
 <?php require "Require/ex.header.php"; ?>
 
+<?php
+if (empty($_SESSION['user'])) {
+    header("Location: pageConnexion.php");
+    exit();
+}
+?>
+
 <body>
     <?php
     if (isset($_SESSION["user"])) {

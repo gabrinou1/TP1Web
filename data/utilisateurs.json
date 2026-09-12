@@ -1,8 +1,9 @@
 [
     {
-        "name": null,
-        "password": null,
-        "email": null,
-        "role": null
+        "name": "ada",
+        "email": "gabvallieres22@hotmail.com",
+        "password": "$2y$10$wRE.ks.IOefb.tGVdZhkbePMmSVaLKbmlFq3z3oGTynAU1s1K\/GXu",
+        "role": "client"
     }
+    
 ]
