@@ -47,7 +47,6 @@ if (isset($_SESSION["connected"])) {
         <div class="navbar-nav">
           <a class="nav-item nav-link active px-10" href="pageAcceuil.php">Accueil <span
               class="sr-only"></span></a>
-          <a class="nav-item nav-link px-10" href="pageAlbums.php">Albums</a>
           <?php if ($isConnected) {
             if ($user->getRole() == "gerant") {
               echo '<a class="nav-item nav-link px-10" href="pageArtiste.php">Artiste</a>';
@@ -73,5 +72,18 @@ if (isset($_SESSION["connected"])) {
 
 
         </div>
+        
       </div>
+      <!-- Liste des œuvres (pistes)
+      <?php
+
+          if ($isConnected) {
+            echo '<form method="post" action ="Authentification.php">
+            <input type="submit" class="btn btn-danger" name="logout" value="Deconnexion">
+          </form>';
+          } else {
+            echo '<a class="nav-item nav-link px-50 bg-success rounded" href="pageConnexion.php">Connexion</a>';
+          }
+          ?>
+      -->
     </nav>

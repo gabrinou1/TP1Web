@@ -1,5 +1,5 @@
 
 
 <footer class="bg-light mt-3 text-success p-4 text-center mt-auto">    
-   <span> Programmation Web II 420-W24-SF-Gabriel Vallieres - Brad Deschênes <?= date("l"); ?> </span>
+   <span> Programmation Web II 420-W24-SF-Gabriel Vallieres - Brad Deschênes - Aimeric Lachance <?= date("l"); ?> </span>
 </footer>
