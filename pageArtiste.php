@@ -1,5 +1,11 @@
-<?php require "Require/ex.header.php"; ?>
+<?php require "Require/ex.header.php"; 
 
+if ($_SESSION['user']->getRole() !== 'gerant') {
+    header("Location: pageAccueil.php");
+    exit();
+}
+
+?>
 <body>
     <form method="post" action="pageArtiste.php">
         <?php

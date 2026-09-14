@@ -2,16 +2,52 @@
 require "classes/utilisateur.class.php";
 
 session_start();
+
 LogoutUser();
-ValidateUser();
+if (isset($_POST["loginEmail"]) && isset($_POST["loginPassword"])) {
+    LoginUser();
+} else if (isset($_POST["userName"])) {
+    ValidateUser();
+}
 
-$jsonFile = '/data/utilisateurs.json';
 
-$userData = [];
+function LoginUser()
+{
+    if (isset($_POST["loginEmail"]) && isset($_POST["loginPassword"])) {
 
-if (file_exists($jsonFile)) {
-    $jsonString = file_get_contents($jsonFile);
-    $userData = json_decode($jsonString, true); 
+        $email = trim($_POST["loginEmail"]);
+        $password = trim($_POST["loginPassword"]);
+
+        $jsonFile = __DIR__ . '/data/utilisateurs.json';
+
+        if (file_exists($jsonFile)) {
+
+            $currentData = file_get_contents($jsonFile);
+            $arrayData = json_decode($currentData, true);
+
+            foreach ($arrayData as $user) {
+
+                if ($user["email"] === $email && $user["password"] === $password) {
+
+                    $loggedUser = new User(
+                        $user["name"],
+                        $user["password"],
+                        $user["email"],
+                        $user["role"]
+                    );
+
+                    $_SESSION["user"] = $loggedUser;
+
+                    $_SESSION["connected"] = true;
+                    header("Location: pageAcceuil.php");
+                    exit();
+                }
+            }
+        }
+
+        echo "Courriel ou mot de passe incorrect.";
+        exit();
+    }
 }
 
 function ValidateUser()
@@ -25,9 +61,14 @@ function ValidateUser()
         $password = trim($_POST["password"]);
 
         if (!preg_match("/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$/", $password)) {
-            echo "Your password must have an Uppercase letter, a number and at least 8 characters.";
+            $_SESSION["error"] = "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.";
             $isValidated = false;
         }
+    }
+
+    if ($password !== $_POST["confirmedpassword"]) {
+        $_SESSION["error"] = "Les mots de passe ne correspondent pas.";
+        $isValidated = false;
     }
 
     if (isset($_POST["email"])) {
@@ -39,28 +80,70 @@ function ValidateUser()
     }
 
     if (empty($name)) {
-        echo "Name is required";
+        $_SESSION["error"] = "Le nom d'utilisateur est requis.";
+        $isValidated = false;
     }
 
     if (strlen($name) < 3) {
-        echo "Name is too short";
+        $_SESSION["error"] = "Le nom d'utilisateur doit contenir au moins 3 caractères.";
+        $isValidated = false;
     }
+
+
 
     if ($isValidated) {
         $user = new User($name, $password, $email, $role);
 
+
+
+        $jsonFile = __DIR__ . '/data/utilisateurs.json';
+
+        if (file_exists($jsonFile)) {
+            $currentData = file_get_contents($jsonFile);
+            $arrayData = json_decode($currentData, true);
+        } else {
+            $arrayData = [];
+        }
+
+        foreach ($arrayData as $existingUser) {
+
+            if (strtolower($existingUser["email"]) === strtolower($email)) {
+
+                $_SESSION["error"] = "Ce courriel est déjà utilisé.";
+                header("Location: pageInscription.php");
+                exit();
+            }
+        }
+
         $_SESSION["user"] = $user;
 
-        header("Location: pageAcceuil.php");
+
+        $newData = [
+            "name" => $name,
+            "password" => $password,
+            "email" => $email,
+            "role" => $role,
+        ];
+
+        $arrayData[] = $newData;
+        $jsonString = json_encode($arrayData, JSON_PRETTY_PRINT);
+
+
+        if (file_put_contents($jsonFile, $jsonString, LOCK_EX)) {
+
+        }
+        $_SESSION["connexionSuccess"] = true;
+        header("Location: pageConnexion.php");
         exit();
 
-    }else{
-        header("Location: pageConnexion.php");
+    } else {
+        header("Location: pageInscription.php");
         exit();
     }
 
 
 }
+
 
 function LogoutUser()
 {
