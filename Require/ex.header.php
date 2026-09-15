@@ -32,13 +32,13 @@ if (isset($_SESSION["connected"])) {
 
 
   <div class="container" id="detail">
-    <div class="text-white d-flex align-items-center">
-      <img src="images\LLM_Logo.png" alt="LLM-Logo" width="75px" height="75px">
+    <div class="text-white d-flex align-items-center mt-2">
+      <a href="pageAcceuil.php"><img src="images\LLM_Logo.png" alt="LLM-Logo" width="75px" height="75px"></a>
     </div>
     <hr />
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-      <a class="navbar-brand" href="#">Mediateque Musical en Ligne</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+      <a class="navbar-brand ms-2" href="pageAcceuil.php">Mediateque Musical en Ligne</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -47,7 +47,6 @@ if (isset($_SESSION["connected"])) {
         <div class="navbar-nav">
           <a class="nav-item nav-link active px-10" href="pageAcceuil.php">Accueil <span
               class="sr-only"></span></a>
-          <a class="nav-item nav-link px-10" href="pageAlbums.php">Albums</a>
           <?php if ($isConnected) {
             if ($user->getRole() == "gerant") {
               echo '<a class="nav-item nav-link px-10" href="pageArtiste.php">Artiste</a>';
@@ -62,16 +61,25 @@ if (isset($_SESSION["connected"])) {
 
           if ($isConnected) {
             echo '<a class="nav-item nav-link px-10" href="pageProfil.php">Profil</a>';
-            echo '<form method="post" action ="Authentification.php">
-            <input type="submit" class="btn btn-danger" name="logout" value="Deconnexion">
-          </form>';
           } else {
             echo '<a class="nav-item nav-link px-10" href="pageInscription.php">Inscription</a>';
-            echo '<a class="nav-item nav-link px-10 bg-success rounded" href="pageConnexion.php">Connexion</a>';
           }
           ?>
 
 
         </div>
+        
       </div>
+      
+      <?php
+
+          if ($isConnected) {
+            echo '<form method="post" action ="Authentification.php">
+            <input type="submit" class="btn btn-danger me-2" name="logout" value="Deconnexion">
+          </form>';
+          } else {
+            echo '<a class="nav-item nav-link bg-success p-2 me-2 rounded" href="pageConnexion.php">Connexion</a>';
+          }
+          ?>
+      
     </nav>
