@@ -44,8 +44,9 @@ function LoginUser()
                 }
             }
         }
+        $_SESSION["error"] = "Le courriel ou le mot de passe est incorrect";
+        header("Location: pageConnexion.php");
 
-        echo "Courriel ou mot de passe incorrect.";
         exit();
     }
 }

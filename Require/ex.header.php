@@ -10,7 +10,7 @@
 
   <style>
     body {
-      background-color: #6d6b7e;
+      background-color: #eeeef0;
     }
   </style>
 
@@ -38,7 +38,7 @@ if (isset($_SESSION["connected"])) {
     <hr />
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
-      <a class="navbar-brand ms-2" href="pageAcceuil.php">Mediateque Musical en Ligne</a>
+      <a class="navbar-brand ms-2" href="pageAcceuil.php">Médiatèque musical en ligne</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

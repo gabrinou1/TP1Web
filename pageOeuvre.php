@@ -87,7 +87,7 @@
     ?>
     <form method="post" action="pageOeuvre.php">
         <div class="row mb-3 mt-3 mb-3">
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-12">
                 <label for="artistWork">Nom de l'oeuvre :</label>
                 <input type="text" name="artistWork" id="artistWork" value="<?php if (isset($_SESSION['artistWork'])) {
                     echo $_SESSION['artistWork'];
@@ -96,7 +96,7 @@
                     echo '<p class="text-danger">Le nom de l\'oeuvre est invalide!</p>';
                 } ?>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-12">
                 <label for="name">Nom de l'artiste :</label>
                 <input type="text" name="name" id="name" value="<?php if (isset($_SESSION['name'])) {
                     echo $_SESSION['name'];
@@ -105,7 +105,7 @@
                     echo '<p class="text-danger">Nom d\'artiste est invalide!</p>';
                 } ?>
             </div>
-            <div class="col-md-4 d-flex">
+            <div class="col-md-4 col-sm-12 d-flex">
                 <label for="artistRole" class="me-2">Rôle de l'artiste :</label>
                 <select style="width: 125px;" name="artistRole">
                     <option value="" selected></option>
@@ -117,7 +117,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-12">
                 <label for="songTime">Temps de la chanson en seconde :</label>
                 <input type="text" name="songTime" id="songTime" value="<?php if (isset($_SESSION['songTime'])) {
                     echo $_SESSION['songTime'];
@@ -126,14 +126,17 @@
                     echo '<p class="text-danger">La durée de la chanson est invalide!</p>';
                 } ?>
             </div>
-            <div class="col-md-6">
-                <label for="songSize">Taille en MB :</label>
-                <input type="text" name="songSize" id="songSize" value="<?php if (isset($_SESSION['songSize'])) {
-                    echo $_SESSION['songSize'];
-                } ?>">
-                <?php if ($isSongSizeValid == false) {
-                    echo '<p class="text-danger">La taille de la chanson est invalide!</p>';
-                } ?>
+            <div class="col-md-6 col-sm-12">
+                <div>
+                    <label for="songSize">Taille en MB :</label>
+                    <input type="text" name="songSize" id="songSize" value="<?php if (isset($_SESSION['songSize'])) {
+                        echo $_SESSION['songSize'];
+                    } ?>">
+                    <?php if ($isSongSizeValid == false) {
+                        echo '<p class="text-danger">La taille de la chanson est invalide!</p>';
+                    } ?>
+                </div>
+
             </div>
         </div>
         <div class="mb-3 w-25">
@@ -185,9 +188,9 @@
                 ?>
                 <thead>
                     <tr>
-                        <th>Ouevre</th>
-                        <th>Artist</th>
-                        <th>Role</th>
+                        <th>Oeuvre</th>
+                        <th>Artiste</th>
+                        <th>Rôle</th>
                         <th>Durée (Seconde)</th>
                         <th>Taille (MB)</th>
                         <th>Date d'ajout</th>

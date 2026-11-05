@@ -4,5 +4,11 @@
         "email": "gabvallieres22@hotmail.com",
         "password": "$2y$10$wRE.ks.IOefb.tGVdZhkbePMmSVaLKbmlFq3z3oGTynAU1s1K\/GXu",
         "role": "client"
+    },
+    {
+        "name": "Gabriel123",
+        "password": "12345678!Mn",
+        "email": "gabvallieres@hotmail.com",
+        "role": "gerant"
     }
 ]

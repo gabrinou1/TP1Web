@@ -3,8 +3,20 @@
 if (isset($_SESSION["connexionSuccess"])) {
     echo '<p class="text-success">Inscription réussie!</p>';
 }
+
+$error = "";
+
+if (isset($_SESSION["error"])) {
+    $error = $_SESSION["error"];
+    unset($_SESSION["error"]);
+}
 ?>
 <body>
+    <?php if (!empty($error)) : ?>
+        <div class="alert alert-danger">
+            <?= htmlspecialchars($error) ?>
+        </div>
+    <?php endif; ?>
     <form method = "post"  action ="Authentification.php">
 
         <label for="loginEmail">Courriel: </label><br>
