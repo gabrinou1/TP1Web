@@ -1,4 +1,5 @@
-<?php require "Require/ex.header.php"; ?>
+<?php require "Require/ex.header.php";
+require_once('connexionpdo.php'); ?>
 
 <body>
 

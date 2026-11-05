@@ -28,8 +28,9 @@ if (isset($_SESSION["error"])) {
         <input type="password" id="confirmedpassword" name="confirmedpassword" minlength="8" required><br>
         <label for="role">Rôle: </label><br>
         <select id="role" name="role">
-            <option selected value="client"> Client </option>
-            <option value="gerant"> Gérant </option>
+            <option selected value="CLIENT"> Client </option>
+            <option value="GERANT"> Gérant </option>
+            <option value="ADMIN"> Administrateur </option>
         </select>
         <input type="submit" value="s'inscrire" class="btn btn-primary">
         </form>

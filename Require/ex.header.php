@@ -32,12 +32,9 @@ if (isset($_SESSION["connected"])) {
 
 
   <div class="container" id="detail">
-    <div class="text-white d-flex align-items-center mt-2">
-      <a href="pageAcceuil.php"><img src="images\LLM_Logo.png" alt="LLM-Logo" width="75px" height="75px"></a>
-    </div>
-    <hr />
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+      <a href="pageAcceuil.php"><img src="images\LLM_Logo.png" alt="LLM-Logo" width="50px" height="50px"></a>
       <a class="navbar-brand ms-2" href="pageAcceuil.php">Médiatèque musical en ligne</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,15 +51,14 @@ if (isset($_SESSION["connected"])) {
             }
           }
           ?>
-
-          
-
           <?php
 
           if ($isConnected) {
             echo '<a class="nav-item nav-link px-10" href="pageProfil.php">Profil</a>';
           } else {
             echo '<a class="nav-item nav-link px-10" href="pageInscription.php">Inscription</a>';
+            echo '<a class="nav-item nav-link px-10" href="BDAlbums.php">albums BD</a>';
+            echo '<a class="nav-item nav-link px-10" href="BDUsers.php">users BD</a>';
           }
           ?>
 
@@ -79,6 +75,7 @@ if (isset($_SESSION["connected"])) {
           </form>';
           } else {
             echo '<a class="nav-item nav-link bg-success p-2 me-2 rounded" href="pageConnexion.php">Connexion</a>';
+            
           }
           ?>
       
