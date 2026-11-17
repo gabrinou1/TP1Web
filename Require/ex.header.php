@@ -52,6 +52,9 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
               echo '<a class="nav-item nav-link px-10" href="pageArtiste.php">Artiste</a>';
               echo '<a class="nav-item nav-link px-10" href="pageOeuvre.php">Oeuvres</a>';
             }
+            if ($user->getRole() == "CLIENT") {
+            echo '<a class="nav-item nav-link px-10" href="pagePanier.php">Panier</a>';
+           }
           }
           ?>
           <?php
@@ -60,8 +63,7 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
             echo '<a class="nav-item nav-link px-10" href="pageProfil.php">Profil</a>';
           } else {
             echo '<a class="nav-item nav-link px-10" href="pageInscription.php">Inscription</a>';
-            echo '<a class="nav-item nav-link px-10" href="BDAlbums.php">albums BD</a>';
-            echo '<a class="nav-item nav-link px-10" href="BDUsers.php">users BD</a>';
+            echo '<a class="nav-item nav-link px-10" href="pageCollectionAlbum.php">Albums</a>';
           }
           ?>
 

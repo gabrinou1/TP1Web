@@ -1,5 +1,11 @@
 <?php require "Require/ex.header.php"; 
 
+
+if (isset($_SESSION["connected"]) && $_SESSION["connected"]) {
+    header("Location: pageAcceuil.php");
+    exit();
+}
+
 if (isset($_SESSION["connexionSuccess"])) {
     echo '<p class="text-success">Inscription réussie!</p>';
 }
