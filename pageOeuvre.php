@@ -1,5 +1,15 @@
-<?php require "Require/ex.header.php";
-require_once('connexionpdo.php'); ?>
+<?php
+require_once "classes/utilisateur.class.php";
+session_start();
+
+if (!isset($_SESSION["user"]) || $_SESSION["user"]->getRole() !== "GERANT") {
+    header("Location: pageAcceuil.php");
+    exit();
+}
+
+require "Require/ex.header.php";
+require_once "connexionpdo.php";
+?>
 
 <body>
 

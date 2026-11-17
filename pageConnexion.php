@@ -1,5 +1,11 @@
 <?php require "Require/ex.header.php"; 
 
+
+if (isset($_SESSION["connected"]) && $_SESSION["connected"]) {
+    header("Location: pageAcceuil.php");
+    exit();
+}
+
 if (isset($_SESSION["connexionSuccess"])) {
     echo '<p class="text-success">Inscription réussie!</p>';
 }
@@ -23,7 +29,7 @@ if (isset($_SESSION["error"])) {
         <input type="email" id="loginEmail" name="loginEmail" required><br>
 
         <label for="loginPassword">Mot de passe: </label><br>
-        <input type="password" id="loginPassword" name="loginPassword" minlength="8" required><br>
+        <input type="password" id="loginPassword" name="loginPassword" required><br>
 
         <input type="submit" value="se connecter" class="btn btn-primary">
         </form>

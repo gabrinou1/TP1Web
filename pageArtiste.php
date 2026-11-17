@@ -1,10 +1,14 @@
-<?php require "Require/ex.header.php"; 
+<?php
+require_once "classes/utilisateur.class.php";
+session_start();
 
-if ($_SESSION['user']->getRole() !== 'gerant') {
-    header("Location: pageAccueil.php");
+if (!isset($_SESSION["user"]) || $_SESSION["user"]->getRole() !== "GERANT") {
+    header("Location: pageAcceuil.php");
     exit();
 }
 
+require "Require/ex.header.php";
+require_once "connexionpdo.php";
 ?>
 <body>
     <form method="post" action="pageArtiste.php">

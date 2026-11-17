@@ -4,14 +4,16 @@ class User{
     private $m_password;
     private $m_email;
     private $m_role;
+    private $m_id;
 
 
 
-    public function __construct($p_name, $p_password, $p_email, $p_role){
+    public function __construct($p_name, $p_password, $p_email, $p_role, $p_id = null){
         $this->setName($p_name);
         $this->setPassword($p_password);
         $this->setEmail($p_email);
         $this->setRole($p_role);
+        $this->setId($p_id);
     }
 
     public function getName(){
@@ -20,8 +22,6 @@ class User{
     public function setName($p_name){
         $this->m_name = $p_name;
     }
-
-   
 
     public function getPassword(){
         return $this->m_password;
@@ -42,6 +42,13 @@ class User{
     }
     public function setRole($p_role){
         $this->m_role = $p_role;
+    }
+
+    public function getId(){
+        return $this->m_id;
+    }
+    public function setId($p_id){
+        $this->m_id = $p_id;
     }
 
     public function __toString(): string {

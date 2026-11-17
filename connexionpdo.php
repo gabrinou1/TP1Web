@@ -12,5 +12,4 @@ catch(Exception $e)
 {
     die('Erreur lors de la connexion a la BD: ' . $e->getMessage());
 }
-echo "<h2>Connexion reussie PDO ($bd)</h2>";
-?>
+//echo "<h2>Connexion reussie PDO ($bd)</h2>";

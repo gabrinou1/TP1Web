@@ -17,14 +17,17 @@
 </head>
 
 <?php
-require "classes/utilisateur.class.php";
+require_once "classes/utilisateur.class.php";
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $isConnected = false;
 
-
-session_start();
-if (isset($_SESSION["connected"])) {
-  $isConnected = true;
-  $user = $_SESSION["user"];
+if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
+    $isConnected = true;
+    $user = $_SESSION["user"];
 }
 ?>
 
@@ -45,10 +48,13 @@ if (isset($_SESSION["connected"])) {
           <a class="nav-item nav-link active px-10" href="pageAcceuil.php">Accueil <span
               class="sr-only"></span></a>
           <?php if ($isConnected) {
-            if ($user->getRole() == "gerant") {
+            if ($user->getRole() == "GERANT") {
               echo '<a class="nav-item nav-link px-10" href="pageArtiste.php">Artiste</a>';
               echo '<a class="nav-item nav-link px-10" href="pageOeuvre.php">Oeuvres</a>';
             }
+            if ($user->getRole() == "CLIENT") {
+            echo '<a class="nav-item nav-link px-10" href="pagePanier.php">Panier</a>';
+           }
           }
           ?>
           <?php
@@ -57,8 +63,7 @@ if (isset($_SESSION["connected"])) {
             echo '<a class="nav-item nav-link px-10" href="pageProfil.php">Profil</a>';
           } else {
             echo '<a class="nav-item nav-link px-10" href="pageInscription.php">Inscription</a>';
-            echo '<a class="nav-item nav-link px-10" href="BDAlbums.php">albums BD</a>';
-            echo '<a class="nav-item nav-link px-10" href="BDUsers.php">users BD</a>';
+            echo '<a class="nav-item nav-link px-10" href="pageCollectionAlbum.php">Albums</a>';
           }
           ?>
 
