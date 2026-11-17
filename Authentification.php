@@ -1,5 +1,6 @@
 <?php
 require "classes/utilisateur.class.php";
+require_once "connexionpdo.php";
 
 session_start();
 
@@ -13,46 +14,55 @@ if (isset($_POST["loginEmail"]) && isset($_POST["loginPassword"])) {
 
 function LoginUser()
 {
+    global $conn;
+
     if (isset($_POST["loginEmail"]) && isset($_POST["loginPassword"])) {
 
         $email = trim($_POST["loginEmail"]);
-        $password = trim($_POST["loginPassword"]);
+        $password = $_POST["loginPassword"];
 
-        $jsonFile = __DIR__ . '/data/utilisateurs.json';
+        $sql = "SELECT * FROM utilisateurs WHERE courriel = :email";
 
-        if (file_exists($jsonFile)) {
+        $requete = $conn->prepare($sql);
+        $requete->execute(["email" => $email]);
 
-            $currentData = file_get_contents($jsonFile);
-            $arrayData = json_decode($currentData, true);
+        $user = $requete->fetch(PDO::FETCH_ASSOC);
 
-            foreach ($arrayData as $user) {
+        if ($user && password_verify($password, $user["mot_passe"])) {
 
-                if ($user["email"] === $email && $user["password"] === $password) {
+            $loggedUser = new User(
+                $user["nom"],
+                null,
+                $user["courriel"],
+                $user["urRole"],
+                $user["id"]
+            );
 
-                    $loggedUser = new User(
-                        $user["name"],
-                        $user["password"],
-                        $user["email"],
-                        $user["role"]
-                    );
+            session_regenerate_id(true);
 
-                    $_SESSION["user"] = $loggedUser;
+            $_SESSION["user"] = $loggedUser;
+            $_SESSION["connected"] = true;
 
-                    $_SESSION["connected"] = true;
-                    header("Location: pageAcceuil.php");
-                    exit();
-                }
-            }
+            header("Location: pageAcceuil.php");
+            exit();
         }
+
         $_SESSION["error"] = "Le courriel ou le mot de passe est incorrect";
         header("Location: pageConnexion.php");
-
         exit();
     }
 }
 
 function ValidateUser()
 {
+
+    global $conn;
+
+    if (isset($_SESSION["connected"]) && $_SESSION["connected"]) {
+        header("Location: pageAcceuil.php");
+        exit();
+    }
+
     $isValidated = true;
     if (isset($_POST["userName"])) {
         $name = trim($_POST["userName"]);
@@ -76,8 +86,14 @@ function ValidateUser()
         $email = trim($_POST["email"]);
     }
 
-    if (isset($_POST["role"])) {
-        $role = trim($_POST["role"]);
+    $role = "CLIENT";
+    
+    if (isset($_POST["ville"])) {
+        $ville = trim($_POST["ville"]);
+    }
+
+    if (isset($_POST["age"])) {
+        $age = trim($_POST["age"]);
     }
 
     if (empty($name)) {
@@ -85,55 +101,53 @@ function ValidateUser()
         $isValidated = false;
     }
 
-    if (strlen($name) < 3) {
-        $_SESSION["error"] = "Le nom d'utilisateur doit contenir au moins 3 caractères.";
+    if (strlen($name) < 3 || strlen($name) > 45) {
+        $_SESSION["error"] = "Le nom d'utilisateur doit contenir entre 3 et 45 caractères.";
         $isValidated = false;
     }
 
+    if ($age != "") {
+        if (!filter_var($age, FILTER_VALIDATE_INT) || $age < 18 || $age > 100) {
+            $_SESSION["error"] = "L'âge doit être entre 18 et 100 ans.";
+            $isValidated = false;
+        }
+    } else {
+        $age = null;
+    }
 
+    if ($ville == "") {
+        $ville = 3;
+    }
 
+    
     if ($isValidated) {
-        $user = new User($name, $password, $email, $role);
 
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
+        $sql = "INSERT INTO utilisateurs
+                (nom, courriel, mot_passe, id_ville, urRole, age)
+                VALUES
+                (:nom, :email, :password, :ville, :role, :age)";
 
-        $jsonFile = __DIR__ . '/data/utilisateurs.json';
+        $requete = $conn->prepare($sql);
 
-        if (file_exists($jsonFile)) {
-            $currentData = file_get_contents($jsonFile);
-            $arrayData = json_decode($currentData, true);
-        } else {
-            $arrayData = [];
+        try {
+            $requete->execute([
+                "nom" => $name,
+                "email" => $email,
+                "password" => $hashedPassword,
+                "ville" => $ville,
+                "role" => $role,
+                "age" => $age
+            ]);
+        } catch (PDOException $e) {
+            $_SESSION["error"] = "Impossible de créer le compte.";
+            header("Location: pageInscription.php");
+            exit();
         }
 
-        foreach ($arrayData as $existingUser) {
-
-            if (strtolower($existingUser["email"]) === strtolower($email)) {
-
-                $_SESSION["error"] = "Ce courriel est déjà utilisé.";
-                header("Location: pageInscription.php");
-                exit();
-            }
-        }
-
-        $_SESSION["user"] = $user;
-
-
-        $newData = [
-            "name" => $name,
-            "password" => $password,
-            "email" => $email,
-            "role" => $role,
-        ];
-
-        $arrayData[] = $newData;
-        $jsonString = json_encode($arrayData, JSON_PRETTY_PRINT);
-
-
-        if (file_put_contents($jsonFile, $jsonString, LOCK_EX)) {
-
-        }
         $_SESSION["connexionSuccess"] = true;
+
         header("Location: pageConnexion.php");
         exit();
 
@@ -141,15 +155,14 @@ function ValidateUser()
         header("Location: pageInscription.php");
         exit();
     }
-
-
 }
 
 
 function LogoutUser()
 {
-    if (isset($_POST["logout"])) {
-        unset($_SESSION["user"]);
+    if (isset($_POST["logout"]) && isset($_SESSION["user"])) {
+
+        session_unset();
         session_destroy();
 
         header("Location: pageAcceuil.php");
