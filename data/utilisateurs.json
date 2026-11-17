@@ -10,5 +10,17 @@
         "password": "12345678!Mn",
         "email": "gabvallieres@hotmail.com",
         "role": "gerant"
+    },
+    {
+        "name": "bradtest",
+        "password": "Test12345",
+        "email": "bradtest@gmail.com",
+        "role": "ADMIN"
+    },
+    {
+        "name": "bradgerant",
+        "password": "Gerant1234",
+        "email": "bradgerant@gmail.com",
+        "role": "GERANT"
     }
 ]
