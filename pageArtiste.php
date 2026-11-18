@@ -11,6 +11,7 @@ require "Require/ex.header.php";
 require_once "connexionpdo.php";
 ?>
 <body>
+    <h1>Ajouter un artiste</h1>
     <form method="post" action="pageArtiste.php">
         <?php
         $isFormEntryValid = true;

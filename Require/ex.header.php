@@ -53,6 +53,7 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
             if ($user->getRole() == "GERANT") {
               echo '<a class="nav-item nav-link px-10" href="pageArtiste.php">Artiste</a>';
               echo '<a class="nav-item nav-link px-10" href="pageOeuvre.php">Oeuvres</a>';
+              echo '<a class="nav-item nav-link px-10" href="pageAlbum.php">Albums</a>';
             }
             if ($user->getRole() == "CLIENT") {
               echo '<a class="nav-item nav-link px-10" href="pagePanier.php">Panier</a>';
