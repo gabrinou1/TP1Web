@@ -1,56 +1,90 @@
+// Aimeric Lachance
 <?php
-require_once "classes/utilisateur.class.php";
 session_start();
-
-require "Require/ex.header.php";
 require_once "connexionpdo.php";
+
+$sqlAlbums = "SELECT a.id, a.titre, a.code_album, a.date_album, a.pht_couvt, g.descGenre 
+              FROM albums a
+              INNER JOIN genres g ON a.id_genre = g.id
+              ORDER BY a.titre ASC";
+$stmtAlbums = $conn->query($sqlAlbums);
+$albums = $stmtAlbums->fetchAll(PDO::FETCH_ASSOC);
+
+$sqlOeuvres = "SELECT o.id, o.titre_oeuvre, o.dureesec, o.taillemb, o.prix, ar.nom_artiste, r.descRole
+               FROM oeuvres o
+               INNER JOIN artistes ar ON o.id_artiste = ar.id
+               INNER JOIN roles r ON o.id_role = r.id
+               WHERE o.id_album = :id_album
+               ORDER BY o.id ASC";
+$stmtOeuvres = $conn->prepare($sqlOeuvres);
+
+require_once 'Require/ex.header.php';
 ?>
-
-<?php
-$jsonString = file_get_contents('data/albums.json');
-$data = json_decode($jsonString, true);
-
-if (isset($data['albums'])): ?>
-
-    <body>
-        <div class="container my-5">
-            <h2 class="text-center mb-5"><strong>Collection d'album</strong></h2>
+<body>
+    <div class="container my-5">
+        <h2 class="text-center mb-5"><strong>Catalogue des albums</strong></h2>
+    
+        <?php if (empty($albums)): ?>
+            <p>Aucun album n'est disponible pour le moment.</p>
+        <?php else: ?>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-5 g-4">
-                <?php foreach ($data['albums'] as $album): ?>
+                <?php foreach ($albums as $album): ?>
                     <div class="col">
-                        <section class="card" style="max-width: 320px">
-                            <!-- <img src="images/<?php echo htmlspecialchars($album['pht_couvt']); ?>" class="card-img-top album-cover" alt="Couverture de <?php echo $album['titre']; ?>"> -->
-                            <img src="images/AlbumIcon.jpg" class="card-img-top album-cover" alt="Couverture de <?php echo $album['titre']; ?>">
-                            <div class="card-body">
-                                <h4 class="card-title"><?php echo htmlspecialchars($album['titre']); ?></h4>
-                                <p class="card-text"><?php echo htmlspecialchars($album['description']); ?></p>
-                                <p class="card-text">Code : <?php echo htmlspecialchars($album['code_album']); ?></p>
-                                <div class="overflow-auto" style="height: 150px;">
-                                    <p class="mb-1 fs-4"><strong> Pistes :</strong></p>
-                                    <?php if (!empty($album['titre_oeuvre'])): ?>
-                                        <ol class="ps-3 mb-0">
-                                            <?php foreach ($album['titre_oeuvre'] as $piste): ?>
-                                                <li><?php echo htmlspecialchars($piste); ?></li>
-                                            <?php endforeach; ?>
-                                        </ol>
+                        <section class="card border-0">
+                            <?php
+                                if (!empty($album['pht_couvt'])) 
+                                {
+                                    $image = htmlspecialchars($album['pht_couvt']);
+                                } 
+                                else 
+                                {
+                                    $image = 'images/AlbumIcon.jpg';
+                                } 
+                                ?>
+                            <img src="images/albums/<?= $image ?>" class="card-img-top album-cover" alt="Pochette de <?= htmlspecialchars($album['titre']) ?>" width="150">
+                            <div class="card-body d-flex flex-column justify-between">
+                                <h3 class="card-title"><?= htmlspecialchars($album['titre']) ?></h3>
+                                <p class="card-text mb-3">
+                                    <span class="badge bg-secondary mb-1"><?= htmlspecialchars($album['code_album']) ?></span>
+                                    <br>
+                                    <span><strong>Genre :</strong> <?= htmlspecialchars($album['descGenre']) ?></span>
+                                    <br>
+                                    <span><strong>Date de sortie :</strong> <?= htmlspecialchars($album['date_album']) ?></span>
+                                </p>
+                            </div>
+                                <?php
+                                $stmtOeuvres->execute(['id_album' => $album['id']]);
+                                $oeuvres = $stmtOeuvres->fetchAll(PDO::FETCH_ASSOC);
+                                ?>
+            
+                                <div class="album-tracks">
+                                    <h4>Liste des œuvres: <?= count($oeuvres) ?></h4>
+                                    <?php if (empty($oeuvres)): ?>
+                                        <p><em>Aucune œuvre associée à cet album.</em></p>
                                     <?php else: ?>
-                                        <p><em> Aucune piste</em></p>
+                                        <ul>
+                                            <?php foreach ($oeuvres as $oeuvre): ?>
+                                                <li>
+                                                    <strong><?= htmlspecialchars($oeuvre['titre_oeuvre']) ?></strong> 
+                                                    - <?= htmlspecialchars($oeuvre['nom_artiste']) ?> (<?= htmlspecialchars($oeuvre['descRole']) ?>)
+                                                    | Durée : <?= gmdate("i:s", (int)$oeuvre['dureesec']) ?>
+                                                    | Prix : <?= htmlspecialchars($oeuvre['prix']) ?> $
+                                    
+                                                    <?php if (isset($_SESSION['utilisateur']) && $_SESSION['utilisateur']['urRole'] === 'CLIENT'): ?>
+                                                        <a href="panier.php?action=ajouter&id=<?= $oeuvre['id'] ?>">Ajouter au panier</a>
+                                                    <?php endif; ?>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
                                     <?php endif; ?>
                                 </div>
-                                <a href="#" class="btn btn-primary">Ajouter au panier</a>
-                            </div>
                         </section>
                     </div>
                 <?php endforeach; ?>
-
             </div>
-        </div>
-    </body>
+        <?php endif; ?>
+    </div>
+</body>
 <?php
-else:
-    echo "Impossible de charger le fichier JSON";
-endif;
+require_once 'Require/ex.pied.php';
 ?>
-
-
-<?php require "Require/ex.pied.php"; ?>
