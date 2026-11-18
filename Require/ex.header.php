@@ -71,7 +71,7 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
           ?>
 
           <?php
-          if ($isConnected): ?> {
+          if ($isConnected): ?> 
             <form action="Authentification.php" method="post">
               <button type="submit" name="switchRole" class="btn btn-warning">
                 <?php if ($user->getRole() == "GERANT") {
