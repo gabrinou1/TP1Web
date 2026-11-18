@@ -46,7 +46,7 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
       </button>
       <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active px-10" href="pageAcceuil.php">Accueil <span
+          <a class="nav-item nav-link active px-10" href="index.php">Accueil <span
               class="sr-only"></span></a>
           <a class="nav-item nav-link px-10" href="pageCollectionAlbum.php">Albums</a>
           <?php if ($isConnected) {

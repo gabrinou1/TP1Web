@@ -47,7 +47,7 @@ function LoginUser()
             $_SESSION["user"] = $loggedUser;
             $_SESSION["connected"] = true;
 
-            header("Location: pageAcceuil.php");
+            header("Location: index.php");
             exit();
         }
 
@@ -63,7 +63,7 @@ function ValidateUser()
     global $conn;
 
     if (isset($_SESSION["connected"]) && $_SESSION["connected"]) {
-        header("Location: pageAcceuil.php");
+        header("Location: index.php");
         exit();
     }
 
@@ -169,7 +169,7 @@ function LogoutUser()
         session_unset();
         session_destroy();
 
-        header("Location: pageAcceuil.php");
+        header("Location: index.php");
         exit();
     }
 }
