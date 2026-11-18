@@ -38,7 +38,7 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
       <a href="pageAcceuil.php"><img src="images\LLM_Logo.png" alt="LLM-Logo" width="50px" height="50px"></a>
-      <a class="navbar-brand ms-2" href="pageAcceuil.php">Médiatèque musical en ligne</a>
+      <a class="navbar-brand ms-2" href="pageAcceuil.php">Médiathèque musical en ligne</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -47,6 +47,7 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
         <div class="navbar-nav">
           <a class="nav-item nav-link active px-10" href="pageAcceuil.php">Accueil <span
               class="sr-only"></span></a>
+              <a class="nav-item nav-link px-10" href="pageCollectionAlbum.php">Albums</a>
           <?php if ($isConnected) {
             if ($user->getRole() == "GERANT") {
               echo '<a class="nav-item nav-link px-10" href="pageArtiste.php">Artiste</a>';
@@ -63,7 +64,7 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
             echo '<a class="nav-item nav-link px-10" href="pageProfil.php">Profil</a>';
           } else {
             echo '<a class="nav-item nav-link px-10" href="pageInscription.php">Inscription</a>';
-            echo '<a class="nav-item nav-link px-10" href="pageCollectionAlbum.php">Albums</a>';
+            
           }
           ?>
 
