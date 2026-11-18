@@ -1,3 +1,5 @@
+<!-- // Gabriel Vallieres -->
+
 <?php
 require "classes/utilisateur.class.php";
 require_once "connexionpdo.php";

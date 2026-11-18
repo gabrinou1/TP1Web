@@ -1,4 +1,4 @@
-// Aimeric Lachance
+<!-- // Aimeric Lachance -->
 <?php
 require_once 'Require/ex.header.php';
 

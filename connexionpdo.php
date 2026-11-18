@@ -1,4 +1,4 @@
-// Gabriel Vallieres
+<!-- // Gabriel Vallieres -->
 
 <?php
 
