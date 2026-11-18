@@ -70,9 +70,11 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                                                     | Durée : <?= gmdate("i:s", (int)$oeuvre['dureesec']) ?>
                                                     | Prix : <?= htmlspecialchars($oeuvre['prix']) ?> $
                                     
-                                                    <?php if (isset($_SESSION['utilisateur']) && $_SESSION['utilisateur']['urRole'] === 'CLIENT'): ?>
-                                                        <a href="panier.php?action=ajouter&id=<?= $oeuvre['id'] ?>">Ajouter au panier</a>
-                                                    <?php endif; ?>
+                                                    <?php if ($isConnected):
+                                                        if ($user->getRole() == "CLIENT"): ?>
+                                                            <a class="btn btn-primary" href="panier.php?action=ajouter&id=<?= $oeuvre['id'] ?>">Ajouter au panier</a>
+                                                        <?php endif;
+                                                    endif; ?>
                                                 </li>
                                             <?php endforeach; ?>
                                         </ul>
