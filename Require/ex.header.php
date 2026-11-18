@@ -70,19 +70,25 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
 
           ?>
 
-          <form action="Authentification.php" method="post">
-            <button type="submit" name="switchRole" class="btn btn-warning">
-              <?php if ($user->getRole() == "GERANT") {
-                echo 'Mode Client';
-              } else {
-                echo 'mode GERANT';
-              } ?>
-            </button>
-          </form>
+          <?php
+          if ($isConnected): ?> {
+            <form action="Authentification.php" method="post">
+              <button type="submit" name="switchRole" class="btn btn-warning">
+                <?php if ($user->getRole() == "GERANT") {
+                  echo 'Mode Client';
+                } else {
+                  echo 'mode GERANT';
+                } ?>
+              </button>
+            </form>
 
-          
+          <?php endif; ?>
 
-          
+
+
+
+
+
 
 
         </div>
