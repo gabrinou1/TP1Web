@@ -22,78 +22,86 @@ require_once "connexionpdo.php";
     $isSongSizeValid = true;
     $isAlbumCodeValid = true;
     $isPriceValid = true;
+    $isRoleValid = true;
+    $isDateValid = true;
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST["artistWork"])) {
         $artistWork = trim($_POST["artistWork"]);
         $_SESSION["artistWork"] = $artistWork;
-        if (!preg_match("/[a-zA-Z]{3,}/", $artistWork)) {
+        if ($artistWork === '' || !preg_match('/\p{L}/u', $artistWork)) {
             $isArtistWorkValid = false;
             $isFormEntryValid = false;
         }
     }
-
+    
+    $name = trim($_POST["name"]);
+    $_SESSION["name"] = $name;
     if (isset($_POST["name"])) {
-        $name = trim($_POST["name"]);
-        $_SESSION["name"] = $name;
-        if (!preg_match("/[a-zA-Z]{3,}/", $name)) {
+        if (!preg_match('/^\p{L}[\p{L} \'’.\-]*$/u', $name)) {
             $isNameValid = false;
             $isFormEntryValid = false;
         }
     }
 
+    $songTime = trim($_POST["songTime"]);
+    $_SESSION["songTime"] = $songTime;
     if (isset($_POST["songTime"])) {
-        $songTime = trim($_POST["songTime"]);
-        $_SESSION["songTime"] = $songTime;
-        if (0 >= (int) $songTime && !preg_match("/[0-9]{1,}/", $songTime)) {
+        if (0 >= (int) $songTime && !preg_match('/^\d+$/', $songTime)) {
             $isSongTimeValid = false;
             $isFormEntryValid = false;
         }
     }
-    if (isset($_POST["songSize"])) {
-        $songSize = trim($_POST["songSize"]);
-        $_SESSION["songSize"] = $songSize;
+    $songSize = trim($_POST["songSize"]);
+    $_SESSION["songSize"] = $songSize;    
         if (0 >= (float) $songSize && !preg_match("/[0-9]{1,}/", $songSize)) {
             $isSongSizeValid = false;
             $isFormEntryValid = false;
         }
-    }
-    if (isset($_POST["albumCode"])) {
+    
         $albumCode = trim($_POST["albumCode"]);
         $_SESSION["albumCode"] = $albumCode;
-        if (!preg_match("/^[A-Z]{3}\d{4}$/", $albumCode)) {
+    
+        if (!preg_match('/^[A-Z]{3}\d{4}$/', $albumCode)) {
             $isAlbumCodeValid = false;
             $isFormEntryValid = false;
         }
-    }
+    $allowedRoles = ['Chanteur', 'Compositeur', 'Interprète', 'Auteur'];
+    $artistRole = $_POST['artistRole'];
+    $_SESSION['artistRole'] = $artistRole;
     if (isset($_POST['artistRole'])) {
-        $artistRole = $_POST['artistRole'];
-        $_SESSION['artistRole'] = $artistRole;
+        $isRoleValid =false;
+        $isFormEntryValid = false;
     }
-    if (isset($_POST["workPrice"])) {
-        $workPrice = trim($_POST["workPrice"]);
-        $_SESSION["workPrice"] = $workPrice;
-        if (0 >= (float) $workPrice && !preg_match("/[0-9]{1,}/", $workPrice)) {
+    $workPrice = trim($_POST["workPrice"]);
+    $_SESSION["workPrice"] = $workPrice;
+    
+        if (0 >= (float) $workPrice && !preg_match('/^\d+(\.\d{1,2})?$/', $workPrice)) {
             $isPriceValid = false;
             $isFormEntryValid = false;
         }
-    }
-    if (isset($_POST["currentDate"])) {
+    
         $currentDate = $_POST["currentDate"];
         $_SESSION["currentDate"] = $currentDate;
+    if (!$d || $d->format('Y-m-d') !== $currentDate || $currentDate > date('Y-m-d')) {
+        $isDateValid = false;
+        $isFormEntryValid = false;
     }
     $tabWorks = [];
-    if ($isFormEntryValid === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    
 
+    if ($isFormEntryValid) {
         $tabWorks = [
-            'work' => $_SESSION['artistWork'],
-            'name' => $_SESSION['name'],
-            'role' => $_SESSION['artistRole'],
-            'time' => $_SESSION['songTime'],
-            'size' => $_SESSION['songSize'],
-            'date' => $_SESSION['currentDate'],
-            'code' => $_SESSION['albumCode'],
-            'price' => $_SESSION['workPrice']
+            'work'  => $artistWork,
+            'name'  => $name,
+            'role'  => $artistRole,
+            'time'  => $songTime,
+            'size'  => $songSize,
+            'date'  => $currentDate,
+            'code'  => $albumCode,
+            'price' => $workPrice
         ];
+    }
     }
     ?>
     <form method="post" action="pageOeuvre.php">
@@ -125,6 +133,8 @@ require_once "connexionpdo.php";
                     <option value="Interprète">Interprète</option>
                     <option value="Auteur">Auteur</option>
                 </select>
+                <?php if (!$isRoleValid) {
+                    echo '<p class="text-danger">Le rôle est invalide!</p>'; }?>
             </div>
         </div>
         <div class="row mb-3">
@@ -158,6 +168,8 @@ require_once "connexionpdo.php";
             <div class="col-md-4">
                 <label for="currentDate">Date d'ajout à l'album :</label>
                 <input type="date" name="currentDate" id="currentDate" value="<?php echo date("Y-m-d") ?>" required>
+                <?php if (!$isDateValid) {
+                    echo '<p class="text-danger">La date est invalide!</p>';} ?>
             </div>
             <div class="col-md-4">
                 <label for="albumCode">Code de l'album :</label>
