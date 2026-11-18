@@ -51,9 +51,9 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
           <a class="nav-item nav-link px-10" href="pageCollectionAlbum.php">Albums</a>
           <?php if ($isConnected) {
             if ($user->getRole() == "GERANT") {
-              echo '<a class="nav-item nav-link px-10" href="pageArtiste.php">Artiste</a>';
-              echo '<a class="nav-item nav-link px-10" href="pageOeuvre.php">Oeuvres</a>';
-              echo '<a class="nav-item nav-link px-10" href="pageAlbum.php">Albums</a>';
+              echo '<a class="nav-item nav-link px-10" href="pageArtiste.php">Ajout artiste</a>';
+              echo '<a class="nav-item nav-link px-10" href="pageOeuvre.php">Ajout oeuvres</a>';
+              echo '<a class="nav-item nav-link px-10" href="pageAlbum.php">Ajout albums</a>';
             }
             if ($user->getRole() == "CLIENT") {
               echo '<a class="nav-item nav-link px-10" href="pagePanier.php">Panier</a>';
@@ -71,7 +71,7 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
           ?>
 
           <?php
-          if ($isConnected): ?> {
+          if ($isConnected): ?>
             <form action="Authentification.php" method="post">
               <button type="submit" name="switchRole" class="btn btn-warning">
                 <?php if ($user->getRole() == "GERANT") {

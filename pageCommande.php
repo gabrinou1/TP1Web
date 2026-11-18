@@ -1,5 +1,6 @@
-<?php require "Require/ex.header.php";?>
+// Gabriel Vallieres
 
+<?php require "Require/ex.header.php";?>
 
 <?php
 if (empty($_SESSION['user'])) {
