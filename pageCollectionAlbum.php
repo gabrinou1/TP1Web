@@ -1,7 +1,7 @@
 // Aimeric Lachance
 <?php
-session_start();
-require_once "connexionpdo.php";
+require_once 'Require/ex.header.php';
+
 
 $sqlAlbums = "SELECT a.id, a.titre, a.code_album, a.date_album, a.pht_couvt, g.descGenre 
               FROM albums a
@@ -18,7 +18,7 @@ $sqlOeuvres = "SELECT o.id, o.titre_oeuvre, o.dureesec, o.taillemb, o.prix, ar.n
                ORDER BY o.id ASC";
 $stmtOeuvres = $conn->prepare($sqlOeuvres);
 
-require_once 'Require/ex.header.php';
+
 ?>
 <body>
     <div class="container my-5">
