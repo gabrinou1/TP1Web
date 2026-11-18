@@ -18,6 +18,7 @@
 
 <?php
 require_once "classes/utilisateur.class.php";
+require_once "connexionpdo.php";
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();

@@ -1,5 +1,4 @@
-<?php require "Require/ex.header.php"; 
-require_once "connexionpdo.php";?>
+<?php require "Require/ex.header.php";?>
 
 
 <?php
@@ -28,12 +27,18 @@ if (isset($_SESSION["user"])) {
     $user = $_SESSION["user"];
 }
 
-$sql = "SELECT * FROM commandes 
-        WHERE id_utilisateur = :id_client 
-        ORDER BY date_commande DESC";
+$sql = "SELECT c.*, 
+        COALESCE(ligne_commandes.Quantite) AS nombre_articles,
+        COALESCE(ligne_commandes.Quantite * oeuvres.prix) AS prix_total 
+        FROM commandes as c  
+        LEFT JOIN ligne_commandes ON c.id = ligne_commandes.id_commande
+        LEFT JOIN oeuvres ON ligne_commandes.id_oeuvre = oeuvres.id
+        WHERE c.id_utilisateur = :id_client 
+        GROUP BY c.id
+        ORDER BY c.date_commande DESC";
 
 $requete = $conn->prepare($sql);
-$requete->bindValue(':id_client', $user->getId(), PDO::PARAM_INT);
+$requete->bindValue(':id_client', $user->getId());
 $requete->execute();
 $commandes = $requete->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -59,21 +64,38 @@ $commandes = $requete->fetchAll(PDO::FETCH_ASSOC);
                             <th>Client</th>
                             <th>Date</th>
                             <th>Etat</th>
+                            <th>Articles</th>
                             <th>Prix</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <?php foreach ($commandes as $commande) : ?>
+                        <?php if (empty($commandes)): ?>
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    Vous n'avez aucune commande.
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+
+                        <?php foreach ($commandes as $commande) : ?>
+                            <tr>
                                 <td value="<?= $commande["id"] ?>"><?= htmlspecialchars($commande["id"]) ?></td>
                                 <td><?= htmlspecialchars($user->getName()) ?></a></td>
                                 <td><?= htmlspecialchars($commande["date_commande"]) ?></td>
                                 <td><?= htmlspecialchars($commande["etat_commande"]) ?></td>
-                                <td>$254</td>
-                            <td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                            <?php endforeach; ?>   
-                        </tr>
+                                <td><?php if ($commande["nombre_articles"] != null):
+                                        htmlspecialchars($commande["nombre_articles"]);
+                                    endif; ?>
+                                </td>
+                                <td><?php if ($commande["prix_total"] != null):
+                                        htmlspecialchars($commande["prix_total"]);
+                                    endif; ?>
+                                </td>
+                                <td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
+                            </tr>
+                        <?php endforeach; ?>
+
                     </tbody>
                 </table>
             </div>
