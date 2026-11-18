@@ -39,7 +39,9 @@ function LoginUser()
                 null,
                 $user["courriel"],
                 $user["urRole"],
-                $user["id"]
+                $user["id"],
+                $user["id_ville"],
+                $user["age"]    
             );
 
             session_regenerate_id(true);

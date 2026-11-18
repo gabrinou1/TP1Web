@@ -1,4 +1,4 @@
-// Gabriel Vallieres
+
 
 <?php
 require "classes/utilisateur.class.php";
@@ -9,7 +9,7 @@ if (isset($_POST["ajouterAlbum"])) {
     AddAlbum();
 }
 
-
+// Gabriel Vallieres
 function AddAlbum()
 {
     global $conn;
@@ -27,11 +27,28 @@ function AddAlbum()
     $requete->bindValue(":titre", $titre);
     $requete->bindValue(":code", $code);
     $requete->bindValue(":date", $date);
-    $requete->bindValue(":genre", $genre, PDO::PARAM_INT);
+    $requete->bindValue(":genre", $genre);
 
     $requete->execute();
     unset($_POST["ajouterAlbum"]);
 
     header("Location: pageCollectionAlbum.php");
+    exit();
+}
+
+
+// Brad Deschenes
+function AddSong()
+{
+
+
+    header("Location: pageOeuvre.php");
+    exit();
+}
+
+function AddArtist()
+{
+
+    header("Location: pageOeuvre.php");
     exit();
 }

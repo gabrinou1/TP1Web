@@ -38,8 +38,8 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
   <div class="container" id="detail">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
-      <a href="pageAcceuil.php"><img src="images\LLM_Logo.png" alt="LLM-Logo" width="50px" height="50px"></a>
-      <a class="navbar-brand ms-2" href="pageAcceuil.php">Médiathèque musical en ligne</a>
+      <a href="index.php"><img src="images\LLM_Logo.png" alt="LLM-Logo" width="50px" height="50px"></a>
+      <a class="navbar-brand ms-2" href="index.php">Médiathèque musical en ligne</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
