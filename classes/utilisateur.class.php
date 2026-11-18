@@ -5,15 +5,19 @@ class User{
     private $m_email;
     private $m_role;
     private $m_id;
+    private $m_city;
+    private $m_age;
 
 
 
-    public function __construct($p_name, $p_password, $p_email, $p_role, $p_id = null){
+    public function __construct($p_name, $p_password, $p_email, $p_role, $p_id = null, $p_city = null, $p_age = 18){
         $this->setName($p_name);
         $this->setPassword($p_password);
         $this->setEmail($p_email);
         $this->setRole($p_role);
         $this->setId($p_id);
+        $this->setCity($p_city);
+        $this->setAge($p_age);
     }
 
     public function getName(){
@@ -49,6 +53,22 @@ class User{
     }
     public function setId($p_id){
         $this->m_id = $p_id;
+    }
+
+    public function getCity(){
+        return $this->m_city;
+    }
+
+    public function setCity($p_city){
+        $this->m_city = $p_city;
+    }
+
+    public function getAge(){
+        return $this->m_age;
+    }
+
+    public function setAge($p_age){
+        $this->m_age = $p_age;
     }
 
     public function __toString(): string {
