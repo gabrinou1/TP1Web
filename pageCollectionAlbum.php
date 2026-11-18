@@ -41,7 +41,7 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                                     $image = 'images/AlbumIcon.jpg';
                                 } 
                                 ?>
-                            <img src="images/albums/<?= $image ?>" class="card-img-top album-cover" alt="Pochette de <?= htmlspecialchars($album['titre']) ?>" width="150">
+                            <img src="images/albums" class="card-img-top album-cover" alt="Pochette de <?= htmlspecialchars($album['titre']) ?>" width="150">
                             <div class="card-body d-flex flex-column justify-between">
                                 <h3 class="card-title"><?= htmlspecialchars($album['titre']) ?></h3>
                                 <p class="card-text mb-3">
@@ -57,7 +57,7 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                                 $oeuvres = $stmtOeuvres->fetchAll(PDO::FETCH_ASSOC);
                                 ?>
             
-                                <div class="album-tracks">
+                                <div class="album-tracks overflow-auto" style="max-height: 200px;">
                                     <h4>Liste des œuvres: <?= count($oeuvres) ?></h4>
                                     <?php if (empty($oeuvres)): ?>
                                         <p><em>Aucune œuvre associée à cet album.</em></p>
