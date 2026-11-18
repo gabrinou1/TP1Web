@@ -4,6 +4,10 @@ require_once "connexionpdo.php";
 
 session_start();
 
+if (isset($_POST["switchRole"])) {
+    SwitchRole();
+}
+
 LogoutUser();
 if (isset($_POST["loginEmail"]) && isset($_POST["loginPassword"])) {
     LoginUser();
@@ -168,6 +172,26 @@ function LogoutUser()
         header("Location: pageAcceuil.php");
         exit();
     }
+}
+
+function SwitchRole()
+{
+    if (!isset($_SESSION["user"])) {
+        return;
+    }
+
+    $user = $_SESSION["user"];
+
+    if ($user->getRole() === "CLIENT") {
+        $user->setRole("GERANT");
+    } else {
+        $user->setRole("CLIENT");
+    }
+
+    $_SESSION["user"] = $user;
+
+    header("Location: pageProfil.php");
+    exit();
 }
 
 

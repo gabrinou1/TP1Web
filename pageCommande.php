@@ -66,7 +66,7 @@ $commandes = $requete->fetchAll(PDO::FETCH_ASSOC);
                             <th>Etat</th>
                             <th>Articles</th>
                             <th>Prix</th>
-                            <th>Action</th>
+                            <th>Details</th>
                         </tr>
                     </thead>
                     <tbody>

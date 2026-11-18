@@ -1,8 +1,6 @@
 <?php
+require "Require/ex.header.php"; 
 require_once "classes/utilisateur.class.php";
-
-
-session_start();
 
 if (isset($_SESSION["connected"]) && $_SESSION["connected"]) {
     header("Location: pageAcceuil.php");
@@ -13,7 +11,7 @@ $sql = "SELECT * FROM villes ORDER BY nom_ville";
 $requete = $conn->prepare($sql);
 $requete->execute();
 $villes = $requete->fetchAll(PDO::FETCH_ASSOC);
-require "Require/ex.header.php"; 
+
 
 $error = "";
 

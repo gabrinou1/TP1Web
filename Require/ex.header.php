@@ -21,14 +21,14 @@ require_once "classes/utilisateur.class.php";
 require_once "connexionpdo.php";
 
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+  session_start();
 }
 
 $isConnected = false;
 
 if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
-    $isConnected = true;
-    $user = $_SESSION["user"];
+  $isConnected = true;
+  $user = $_SESSION["user"];
 }
 ?>
 
@@ -48,15 +48,15 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
         <div class="navbar-nav">
           <a class="nav-item nav-link active px-10" href="pageAcceuil.php">Accueil <span
               class="sr-only"></span></a>
-              <a class="nav-item nav-link px-10" href="pageCollectionAlbum.php">Albums</a>
+          <a class="nav-item nav-link px-10" href="pageCollectionAlbum.php">Albums</a>
           <?php if ($isConnected) {
             if ($user->getRole() == "GERANT") {
               echo '<a class="nav-item nav-link px-10" href="pageArtiste.php">Artiste</a>';
               echo '<a class="nav-item nav-link px-10" href="pageOeuvre.php">Oeuvres</a>';
             }
             if ($user->getRole() == "CLIENT") {
-            echo '<a class="nav-item nav-link px-10" href="pagePanier.php">Panier</a>';
-           }
+              echo '<a class="nav-item nav-link px-10" href="pagePanier.php">Panier</a>';
+            }
           }
           ?>
           <?php
@@ -65,25 +65,38 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
             echo '<a class="nav-item nav-link px-10" href="pageProfil.php">Profil</a>';
           } else {
             echo '<a class="nav-item nav-link px-10" href="pageInscription.php">Inscription</a>';
-            
           }
+
           ?>
+
+          <form action="Authentification.php" method="post">
+            <button type="submit" name="switchRole" class="btn btn-warning">
+              <?php if ($user->getRole() == "GERANT") {
+                echo 'Mode Client';
+              } else {
+                echo 'mode GERANT';
+              } ?>
+            </button>
+          </form>
+
+          
+
+          
 
 
         </div>
-        
+
       </div>
-      
+
       <?php
 
-          if ($isConnected) {
-            echo '<form method="post" action ="Authentification.php">
+      if ($isConnected) {
+        echo '<form method="post" action ="Authentification.php">
             <input type="submit" class="btn btn-danger me-2" name="logout" value="Deconnexion">
           </form>';
-          } else {
-            echo '<a class="nav-item nav-link bg-success p-2 me-2 rounded" href="pageConnexion.php">Connexion</a>';
-            
-          }
-          ?>
-      
+      } else {
+        echo '<a class="nav-item nav-link bg-success p-2 me-2 rounded" href="pageConnexion.php">Connexion</a>';
+      }
+      ?>
+
     </nav>

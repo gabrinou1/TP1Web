@@ -25,7 +25,6 @@ if (empty($_SESSION['user'])) {
     <div">
         <div class="container py-5">
             <div class="row">
-                <!-- Profile Header -->
                 <div class="col-12 mb-4">
                     <div class="text-center">
                         <div class="position-relative d-inline-block">
@@ -38,8 +37,6 @@ if (empty($_SESSION['user'])) {
                         <p class="text-muted mb-3"><?= htmlspecialchars($user->getRole()) ?></p>
                     </div>
                 </div>
-
-                <!-- Main Content -->
                 <div class="col-12">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body p-0">
@@ -75,15 +72,6 @@ if (empty($_SESSION['user'])) {
                                                     <label class="form-label">Age</label>
                                                     <input type="text" class="form-control" value="<?= $user->getAge() ?>">
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Recent Activity -->
-                                        <div>
-                                            <h5 class="mb-4">Commandes récentes</h5>
-                                            <div class="activity-item">
-                                                <h6 class="mb-1">Aucune commandes</h6>
-                                                <p class="text-muted small mb-0">...</p>
                                             </div>
                                         </div>
                                     </div>
