@@ -1,4 +1,5 @@
 <?php
+// Aimeric Lachance
 require_once "classes/utilisateur.class.php";
 require_once "connexionpdo.php";
 
