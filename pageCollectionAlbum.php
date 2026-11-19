@@ -34,7 +34,7 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                             <?php
                                 if (!empty($album['pht_couvt'])) 
                                 {
-                                    $image = htmlspecialchars($album['pht_couvt']);
+                                    $image = 'images/' + htmlspecialchars($album['pht_couvt']);
                                 } 
                                 else 
                                 {
