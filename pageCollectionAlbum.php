@@ -41,7 +41,7 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                                     $image = 'images/AlbumIcon.jpg';
                                 } 
                                 ?>
-                            <img src="images/albums" class="card-img-top album-cover" alt="Pochette de <?= htmlspecialchars($album['titre']) ?>" width="150">
+                            <img src="images/albums" class="card-img-top album-cover" width="150" height="200" alt="Pochette de <?= htmlspecialchars($album['titre']) ?>" width="150">
                             <div class="card-body d-flex flex-column justify-between">
                                 <h3 class="card-title"><?= htmlspecialchars($album['titre']) ?></h3>
                                 <p class="card-text mb-3">
@@ -56,7 +56,6 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                                 $stmtOeuvres->execute(['id_album' => $album['id']]);
                                 $oeuvres = $stmtOeuvres->fetchAll(PDO::FETCH_ASSOC);
                                 ?>
-                                AddItem();
                                 <div class="album-tracks overflow-auto" style="max-height: 200px;">
                                     <h4>Liste des œuvres: <?= count($oeuvres) ?></h4>
                                     <?php if (empty($oeuvres)): ?>
@@ -74,7 +73,6 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                                                         if ($user->getRole() == "CLIENT"): ?>
                                                             <form action="GestionPanier.php" method="post" class="d-inline-flex align-items-center gap-1">
                                                                 <input type="hidden" name="id" value="<?= $oeuvre['id'] ?>">
-                                                                <input type="number" name="quantite" value="1" min="1" max="255" style="width: 55px;" required>
                                                                 <button type="submit" name="ajouter" class="btn btn-primary btn-sm">Ajouter au panier</button>
                                                             </form>
                                                         <?php endif;
