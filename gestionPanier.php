@@ -27,7 +27,7 @@ else if (isset($_POST["modifier"])) {
 else if (isset($_POST["vider"])) {
     ClearCart();
 }
-else if (isset($_POST["Confirmer"])){
+else if (isset($_POST["confirmer"])){
     ConfirmeOrder();
 }
 
@@ -119,10 +119,14 @@ function ConfirmeOrder()
         $conn->commit();
 
         ClearCart();
+
+        header("Location: pageCommande.php?succes=1");
+        exit();
     } 
     catch (Exception $e) {
         $conn->rollBack();
         $_SESSION["error"] = "Erreur lors de l'enregistrement de la commande.";
+        header("Location: pagePanier.php");
         exit();
     }
 }
