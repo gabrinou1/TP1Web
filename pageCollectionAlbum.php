@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-<!-- // Aimeric Lachance -->
->>>>>>> 79a07939cd09fd33330b702cc4146236091b8040
 <?php
 //Aimeric Lachance
 require_once 'Require/ex.header.php';
@@ -60,7 +56,7 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                                 $stmtOeuvres->execute(['id_album' => $album['id']]);
                                 $oeuvres = $stmtOeuvres->fetchAll(PDO::FETCH_ASSOC);
                                 ?>
-            
+                                AddItem();
                                 <div class="album-tracks overflow-auto" style="max-height: 200px;">
                                     <h4>Liste des œuvres: <?= count($oeuvres) ?></h4>
                                     <?php if (empty($oeuvres)): ?>
@@ -76,8 +72,11 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                                     
                                                     <?php if ($isConnected):
                                                         if ($user->getRole() == "CLIENT"): ?>
-                                                            <input type="number" name="quantite" value="1" min="1" style="width: 50px;" required>
-                                                            <a class="btn btn-primary" href="pagePanier.php?action=ajouter&id=<?= $oeuvre['id'] ?>">Ajouter au panier</a>
+                                                            <form action="GestionPanier.php" method="post" class="d-inline-flex align-items-center gap-1">
+                                                                <input type="hidden" name="id" value="<?= $oeuvre['id'] ?>">
+                                                                <input type="number" name="quantite" value="1" min="1" max="255" style="width: 55px;" required>
+                                                                <button type="submit" name="ajouter" class="btn btn-primary btn-sm">Ajouter au panier</button>
+                                                            </form>
                                                         <?php endif;
                                                     endif; ?>
                                                 </li>
