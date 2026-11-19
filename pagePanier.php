@@ -26,7 +26,7 @@ require "Require/ex.header.php";
 
         <p class="text-center">Votre panier est vide.</p>
 
-        <a href="pageAcceuil.php" class="btn btn-primary">
+        <a href="pageCollectionAlbum.php" class="btn btn-primary">
             Continuer mes achats
         </a>
 

@@ -1,3 +1,4 @@
+<!-- // Gabriel Vallieres -->
 <?php
 class User{
     private $m_name;

@@ -1,3 +1,4 @@
+<!--Gabriel Vallieres -->
 <?php
 require "Require/ex.header.php"; 
 require_once "classes/utilisateur.class.php";
@@ -15,12 +16,16 @@ $villes = $requete->fetchAll(PDO::FETCH_ASSOC);
 
 $error = "";
 
+$oldInfo = $_SESSION["oldInfo"] ?? [];
+unset($_SESSION["oldInfo"]);
+
 if (isset($_SESSION["error"])) {
     $error = $_SESSION["error"];
     unset($_SESSION["error"]);
 }
 ?>
 <body>
+    <h1>Inscription</h1>
     <?php if (!empty($error)) : ?>
         <div class="alert alert-danger">
             <?= htmlspecialchars($error) ?>
@@ -28,16 +33,16 @@ if (isset($_SESSION["error"])) {
     <?php endif; ?>
     <form method = "post"  action ="Authentification.php">
         <label for="userName">Nom d'utilisateur: </label><br>
-        <input type="text" id="userName" name="userName" minlength="3" required><br>
+        <input type="text" id="userName" name="userName" minlength="3" value="<?= htmlspecialchars($oldInfo["userName"] ?? "") ?>" required><br>
         
         <label for="email">Courriel: </label><br>
-        <input type="email" id="email" name="email" required><br>
+        <input type="email" id="email" name="email" value="<?= htmlspecialchars($oldInfo["email"] ?? "") ?>" required><br>
         <label for="password">Mot de passe: </label><br>
         <input type="password" id="password" name="password" minlength="8" required><br>
         <label for="confirmedpassword">Confirmer le mot de passe: </label><br>
         <input type="password" id="confirmedpassword" name="confirmedpassword" minlength="8" required><br>
         <label for="age">Age: </label><br>
-        <input type="number" id="age" name="age" min="18" max="100"><br>
+        <input type="number" id="age" name="age" min="18" max="100" value="<?= htmlspecialchars($oldInfo["age"] ?? "") ?>"><br>
         <label for="ville">Ville :</label><br>
         <select id="ville" name="ville"> 
         <option value="">Sélectionner une ville</option>

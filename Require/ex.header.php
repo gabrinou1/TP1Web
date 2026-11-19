@@ -38,8 +38,8 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
   <div class="container" id="detail">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
-      <a href="pageAcceuil.php"><img src="images\LLM_Logo.png" alt="LLM-Logo" width="50px" height="50px"></a>
-      <a class="navbar-brand ms-2" href="pageAcceuil.php">Médiathèque musical en ligne</a>
+      <a href="index.php"><img src="images\LLM_Logo.png" alt="LLM-Logo" width="50px" height="50px"></a>
+      <a class="navbar-brand ms-2" href="index.php">Médiathèque musical en ligne</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -51,9 +51,9 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
           <a class="nav-item nav-link px-10" href="pageCollectionAlbum.php">Albums</a>
           <?php if ($isConnected) {
             if ($user->getRole() == "GERANT") {
-              echo '<a class="nav-item nav-link px-10" href="pageArtiste.php">Artiste</a>';
-              echo '<a class="nav-item nav-link px-10" href="pageOeuvre.php">Oeuvres</a>';
-              echo '<a class="nav-item nav-link px-10" href="pageAlbum.php">Albums</a>';
+              echo '<a class="nav-item nav-link px-10" href="pageArtiste.php">Ajout artiste</a>';
+              echo '<a class="nav-item nav-link px-10" href="pageOeuvre.php">Ajout oeuvres</a>';
+              echo '<a class="nav-item nav-link px-10" href="pageAlbum.php">Ajout albums</a>';
             }
             if ($user->getRole() == "CLIENT") {
               echo '<a class="nav-item nav-link px-10" href="pagePanier.php">Panier</a>';
@@ -71,7 +71,7 @@ if (isset($_SESSION["connected"]) && isset($_SESSION["user"])) {
           ?>
 
           <?php
-          if ($isConnected): ?> 
+          if ($isConnected): ?>
             <form action="Authentification.php" method="post">
               <button type="submit" name="switchRole" class="btn btn-warning">
                 <?php if ($user->getRole() == "GERANT") {

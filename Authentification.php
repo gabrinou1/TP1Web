@@ -1,3 +1,5 @@
+<!-- // Gabriel Vallieres -->
+
 <?php
 require "classes/utilisateur.class.php";
 require_once "connexionpdo.php";
@@ -39,7 +41,9 @@ function LoginUser()
                 null,
                 $user["courriel"],
                 $user["urRole"],
-                $user["id"]
+                $user["id"],
+                $user["id_ville"],
+                $user["age"]    
             );
 
             session_regenerate_id(true);
@@ -61,6 +65,8 @@ function ValidateUser()
 {
 
     global $conn;
+
+   
 
     if (isset($_SESSION["connected"]) && $_SESSION["connected"]) {
         header("Location: index.php");
@@ -102,6 +108,11 @@ function ValidateUser()
 
     if (empty($name)) {
         $_SESSION["error"] = "Le nom d'utilisateur est requis.";
+        $isValidated = false;
+    }
+
+    if (!preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $email)) {
+        $_SESSION["error"] = "Le format du courriel est invalide.";
         $isValidated = false;
     }
 
@@ -156,6 +167,7 @@ function ValidateUser()
         exit();
 
     } else {
+        $_SESSION["oldInfo"] = $_POST;
         header("Location: pageInscription.php");
         exit();
     }

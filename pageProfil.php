@@ -1,3 +1,5 @@
+<!-- // Gabriel Vallieres -->
+
 <?php require "Require/ex.header.php"; ?>
 
 <?php
@@ -70,7 +72,7 @@ if (empty($_SESSION['user'])) {
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="form-label">Age</label>
-                                                    <input type="text" class="form-control" value="<?= $user->getAge() ?>">
+                                                    <input type="text" class="form-control" value="<?= htmlspecialchars($user->getAge()) ?>">
                                                 </div>
                                             </div>
                                         </div>
