@@ -34,14 +34,14 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                             <?php
                                 if (!empty($album['pht_couvt'])) 
                                 {
-                                    $image = 'images/' + htmlspecialchars($album['pht_couvt']);
+                                    $image = 'images/' . htmlspecialchars($album['pht_couvt']);
                                 } 
                                 else 
                                 {
                                     $image = 'images/AlbumIcon.jpg';
                                 } 
                                 ?>
-                            <img src="images/albums" class="card-img-top album-cover" width="150" height="200" alt="Pochette de <?= htmlspecialchars($album['titre']) ?>" width="150">
+                            <img src="<?= $image?>" class="card-img-top album-cover" width="150" height="200" alt="Pochette de <?= htmlspecialchars($album['titre']) ?>" width="150">
                             <div class="card-body d-flex flex-column justify-between">
                                 <h3 class="card-title"><?= htmlspecialchars($album['titre']) ?></h3>
                                 <p class="card-text mb-3">
