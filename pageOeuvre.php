@@ -14,6 +14,7 @@ require_once "connexionpdo.php";
 <body>
 
     <?php
+    
 
     $isFormEntryValid = true;
     $isArtistWorkValid = true;
@@ -26,7 +27,18 @@ require_once "connexionpdo.php";
     $isDateValid = true;
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST["artistWork"])) {
+
+    $artistWork = $_POST['artistWork'];
+    $idArtiste  = $_POST['idArtiste'];
+    $idRole     = $_POST['idRole'];
+    $idAlbum    = $_POST['idAlbum'];
+    $songTime   = $_POST['songTime'];
+    $songSize   = $_POST['songSize'];
+    $lyrics     = $_POST['lyrics'];
+    $workDate   = $_POST['currentDate'];
+    $workPrice  = $_POST['workPrice'];
+
+    if (isset($artistWork)) {
         $artistWork = trim($_POST["artistWork"]);
         $_SESSION["artistWork"] = $artistWork;
         if ($artistWork === '' || !preg_match('/\p{L}/u', $artistWork)) {
@@ -44,22 +56,22 @@ require_once "connexionpdo.php";
         }
     }
 
-    $songTime = trim($_POST["songTime"]);
+    $songTime = trim($songTime);
     $_SESSION["songTime"] = $songTime;
-    if (isset($_POST["songTime"])) {
+    if (isset($songTime)) {
         if (0 >= (int) $songTime && !preg_match('/^\d+$/', $songTime)) {
             $isSongTimeValid = false;
             $isFormEntryValid = false;
         }
     }
-    $songSize = trim($_POST["songSize"]);
+    $songSize = trim($songSize);
     $_SESSION["songSize"] = $songSize;    
         if (0 >= (float) $songSize && !preg_match("/[0-9]{1,}/", $songSize)) {
             $isSongSizeValid = false;
             $isFormEntryValid = false;
         }
     
-        $albumCode = trim($_POST["albumCode"]);
+        $albumCode = trim($albumCode);
         $_SESSION["albumCode"] = $albumCode;
     
         if (!preg_match('/^[A-Z]{3}\d{4}$/', $albumCode)) {
@@ -69,11 +81,11 @@ require_once "connexionpdo.php";
     $allowedRoles = ['Chanteur', 'Compositeur', 'Interprète', 'Auteur'];
     $artistRole = $_POST['artistRole'];
     $_SESSION['artistRole'] = $artistRole;
-    if (isset($_POST['artistRole'])) {
+    if (isset($artistRole)) {
         $isRoleValid =false;
         $isFormEntryValid = false;
     }
-    $workPrice = trim($_POST["workPrice"]);
+    $workPrice = trim($workPrice);
     $_SESSION["workPrice"] = $workPrice;
     
         if (0 >= (float) $workPrice && !preg_match('/^\d+(\.\d{1,2})?$/', $workPrice)) {
@@ -205,7 +217,8 @@ require_once "connexionpdo.php";
                 }
 
                 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isFormEntryValid == true && !in_array($tabWorks, $_SESSION['allWorks'])) {
-
+                    AddOeuvre($name,$idArtiste,$idRole,$songTime,$songSize,$lyrics,$currentDate,$idAlbum,$workPrice);
+                    echo "L'œuvre a été ajoutée avec succès!";
                     $_SESSION['allWorks'][] = $tabWorks;
                 }
                 ?>
@@ -236,7 +249,23 @@ require_once "connexionpdo.php";
                             <td><?= $info['price'] . "$" ?></td>
                         </tr>
                     </tbody>
-                <?php } ?>
+                <?php } 
+    function AddOeuvre($title, $id_art, $id_role, $duration, $size, $lyrics, $additionDate, $id_album, $price) {
+    try {
+        $reqsql = "INSERT INTO oeuvres (titre_oeuvre, id_artiste, id_role, dureesec, taillemb, "
+                . "lyrics, date_ajout, id_album, prix) VALUES (?,?,?,?,?,?,?,?,?);";
+        $conn = SeConnecter();
+        $rq = $conn->prepare($reqsql);
+        $rq->execute(array($title, $id_art, $id_role, $duration, $size, $lyrics, $additionDate, $id_album, $price));
+        $conn = null;
+        return true;
+    }
+    catch (PDOException $e){
+        echo "Erreur!";
+    }
+    }
+   
+                ?>
 
 
             </table>
