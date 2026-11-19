@@ -1,5 +1,5 @@
-<!-- // Aimeric Lachance -->
 <?php
+//Aimeric Lachance
 require_once 'Require/ex.header.php';
 
 
@@ -34,14 +34,14 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                             <?php
                                 if (!empty($album['pht_couvt'])) 
                                 {
-                                    $image = htmlspecialchars($album['pht_couvt']);
+                                    $image = 'images/' . htmlspecialchars($album['pht_couvt']);
                                 } 
                                 else 
                                 {
                                     $image = 'images/AlbumIcon.jpg';
                                 } 
                                 ?>
-                            <img src="images/albums" class="card-img-top album-cover" alt="Pochette de <?= htmlspecialchars($album['titre']) ?>" width="150">
+                            <img src="<?= $image?>" class="card-img-top album-cover" width="150" height="200" alt="Pochette de <?= htmlspecialchars($album['titre']) ?>" width="150">
                             <div class="card-body d-flex flex-column justify-between">
                                 <h3 class="card-title"><?= htmlspecialchars($album['titre']) ?></h3>
                                 <p class="card-text mb-3">
@@ -56,7 +56,6 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                                 $stmtOeuvres->execute(['id_album' => $album['id']]);
                                 $oeuvres = $stmtOeuvres->fetchAll(PDO::FETCH_ASSOC);
                                 ?>
-            
                                 <div class="album-tracks overflow-auto" style="max-height: 200px;">
                                     <h4>Liste des œuvres: <?= count($oeuvres) ?></h4>
                                     <?php if (empty($oeuvres)): ?>
@@ -72,7 +71,10 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                                     
                                                     <?php if ($isConnected):
                                                         if ($user->getRole() == "CLIENT"): ?>
-                                                            <a class="btn btn-primary" href="panier.php?action=ajouter&id=<?= $oeuvre['id'] ?>">Ajouter au panier</a>
+                                                            <form action="GestionPanier.php" method="post" class="d-inline-flex align-items-center gap-1">
+                                                                <input type="hidden" name="id" value="<?= $oeuvre['id'] ?>">
+                                                                <button type="submit" name="ajouter" class="btn btn-primary btn-sm">Ajouter au panier</button>
+                                                            </form>
                                                         <?php endif;
                                                     endif; ?>
                                                 </li>

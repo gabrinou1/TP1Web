@@ -1,4 +1,5 @@
 <?php
+// Aimeric Lachance
 require_once "classes/utilisateur.class.php";
 require_once "connexionpdo.php";
 
@@ -26,7 +27,7 @@ require "Require/ex.header.php";
 
         <p class="text-center">Votre panier est vide.</p>
 
-        <a href="pageAcceuil.php" class="btn btn-primary">
+        <a href="pageCollectionAlbum.php" class="btn btn-primary">
             Continuer mes achats
         </a>
 
@@ -125,21 +126,15 @@ require "Require/ex.header.php";
         </h3>
 
         <div class="d-flex justify-content-between mt-4">
-
-            <a href="pageAcceuil.php" class="btn btn-secondary">
-                Continuer mes achats
-            </a>
+            <a href="pageCollectionAlbum.php" class="btn btn-secondary">Continuer mes achats</a>
 
             <form action="GestionPanier.php" method="post">
-                <button type="submit" name="vider" class="btn btn-danger">
-                    Vider le panier
-                </button>
+                <button type="submit" name="vider" class="btn btn-danger">Vider le panier</button>
             </form>
 
-            <button class="btn btn-success" disabled>
-                Confirmer la commande
-            </button>
-
+            <form action="GestionPanier.php" method="post">
+                <button type="submit" name="confirmer" class="btn btn-success"> Confirmer la commande</button>
+            </form>
         </div>
 
     <?php endif; ?>
