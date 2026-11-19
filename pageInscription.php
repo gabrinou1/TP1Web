@@ -1,3 +1,4 @@
+<!--Gabriel Vallieres -->
 <?php
 require "Require/ex.header.php"; 
 require_once "classes/utilisateur.class.php";

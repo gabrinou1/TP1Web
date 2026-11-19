@@ -12,6 +12,7 @@ require_once "connexionpdo.php";
 ?>
 
 <body>
+    <h1>Ajouter une oeuvre</h1>
 
     <?php
     

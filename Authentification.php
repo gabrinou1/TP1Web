@@ -1,3 +1,5 @@
+<!-- // Gabriel Vallieres -->
+
 <?php
 require "classes/utilisateur.class.php";
 require_once "connexionpdo.php";
@@ -39,7 +41,9 @@ function LoginUser()
                 null,
                 $user["courriel"],
                 $user["urRole"],
-                $user["id"]
+                $user["id"],
+                $user["id_ville"],
+                $user["age"]    
             );
 
             session_regenerate_id(true);
@@ -47,7 +51,7 @@ function LoginUser()
             $_SESSION["user"] = $loggedUser;
             $_SESSION["connected"] = true;
 
-            header("Location: pageAcceuil.php");
+            header("Location: index.php");
             exit();
         }
 
@@ -63,7 +67,7 @@ function ValidateUser()
     global $conn;
 
     if (isset($_SESSION["connected"]) && $_SESSION["connected"]) {
-        header("Location: pageAcceuil.php");
+        header("Location: index.php");
         exit();
     }
 
@@ -169,7 +173,7 @@ function LogoutUser()
         session_unset();
         session_destroy();
 
-        header("Location: pageAcceuil.php");
+        header("Location: index.php");
         exit();
     }
 }
