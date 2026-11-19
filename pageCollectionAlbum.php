@@ -1,5 +1,5 @@
-// Aimeric Lachance
 <?php
+//Aimeric Lachance
 require_once 'Require/ex.header.php';
 
 
@@ -72,7 +72,8 @@ $stmtOeuvres = $conn->prepare($sqlOeuvres);
                                     
                                                     <?php if ($isConnected):
                                                         if ($user->getRole() == "CLIENT"): ?>
-                                                            <a class="btn btn-primary" href="panier.php?action=ajouter&id=<?= $oeuvre['id'] ?>">Ajouter au panier</a>
+                                                            <input type="number" name="quantite" value="1" min="1" style="width: 50px;" required>
+                                                            <a class="btn btn-primary" href="pagePanier.php?action=ajouter&id=<?= $oeuvre['id'] ?>">Ajouter au panier</a>
                                                         <?php endif;
                                                     endif; ?>
                                                 </li>
