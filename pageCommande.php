@@ -61,7 +61,7 @@ $commandes = $requete->fetchAll(PDO::FETCH_ASSOC);
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>#id</th>
+                            <th>#Commande</th>
                             <th>Client</th>
                             <th>Date</th>
                             <th>Etat</th>

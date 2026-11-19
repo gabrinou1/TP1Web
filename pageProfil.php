@@ -48,7 +48,6 @@ if (empty($_SESSION['user'])) {
                                         <div class="nav flex-column nav-pills">
                                             <a class="nav-link active" href="pageProfil.php"><i class="fas fa-user me-2"></i>Information Personnel</a>
                                             <a class="nav-link" href="pageCommande.php"><i class="fas fa-lock me-2"></i>Commandes</a>
-                                            <a class="nav-link" href="#"><i class="fas fa-bell me-2"></i>Notifications</a>
                                         </div>
                                     </div>
                                 </div>
