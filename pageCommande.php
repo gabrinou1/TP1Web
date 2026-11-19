@@ -32,8 +32,8 @@ $sql = "SELECT c.*,
         COALESCE(ligne_commandes.Quantite) AS nombre_articles,
         COALESCE(ligne_commandes.Quantite * oeuvres.prix) AS prix_total 
         FROM commandes as c  
-        LEFT JOIN ligne_commandes ON c.id = ligne_commandes.id_commande
-        LEFT JOIN oeuvres ON ligne_commandes.id_oeuvre = oeuvres.id
+        INNER JOIN ligne_commandes ON c.id = ligne_commandes.id_commande
+        INNER JOIN oeuvres ON ligne_commandes.id_oeuvre = oeuvres.id
         WHERE c.id_utilisateur = :id_client 
         GROUP BY c.id
         ORDER BY c.date_commande DESC";
@@ -85,13 +85,8 @@ $commandes = $requete->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?= htmlspecialchars($user->getName()) ?></a></td>
                                 <td><?= htmlspecialchars($commande["date_commande"]) ?></td>
                                 <td><?= htmlspecialchars($commande["etat_commande"]) ?></td>
-                                <td><?php if ($commande["nombre_articles"] != null):
-                                        htmlspecialchars($commande["nombre_articles"]);
-                                    endif; ?>
-                                </td>
-                                <td><?php if ($commande["prix_total"] != null):
-                                        htmlspecialchars($commande["prix_total"]);
-                                    endif; ?>
+                                <td><?=  $commande["nombre_articles"]?></td>
+                                <td><?= htmlspecialchars($commande["prix_total"])?> $
                                 </td>
                                 <td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
                             </tr>
